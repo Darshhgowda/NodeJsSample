@@ -31,9 +31,9 @@ jobs:
     - run: npm test
     - name: 'Upload Artifacts'
       uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: ./presentations/*.pptx
+      with:
+        name: build
+        path: build
   release-content:
     name: 'Create GitHub Release'
     runs-on: ubuntu-latest

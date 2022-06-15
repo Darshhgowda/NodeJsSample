@@ -24,8 +24,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    
-rollback-content:
+  rollback-content:
      name: 'Rollback the release'
      runs-on: ubuntu-latest
      needs: [ build ]
@@ -39,24 +38,23 @@ rollback-content:
             delete_orphan_tag: true
          env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-release-content:
-     name: 'Rollback the release'
-     runs-on: ubuntu-latest 
-     steps:
-     - name: Tag
-       id: autotagger
-       uses: butlerlogic/action-autotag@stable
-       with:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  release-content:
+      name: 'Release'
+      runs-on: ubuntu-latest 
+      steps:
+      - name: Tag
+        id: autotagger
+        uses: butlerlogic/action-autotag@stable
+        with:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       
-     - name: Release
-       id: create_release
-       uses: actions/create-release@v1.0.0
-       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       with:
-          tag_name: V${{ github.run_number }}
-          release_name: V${{ github.run_number }}
-          body: ${{ github.run_number }}
+      - name: Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+           tag_name: V${{ github.run_number }}
+           release_name: V${{ github.run_number }}
+           body: ${{ github.run_number }}
            

@@ -25,19 +25,37 @@ jobs:
         cache: 'npm'
     - run: npm ci
     
+rollback-content:
+     name: 'Rollback the release'
+     runs-on: ubuntu-latest
+     needs: [ build ]
+     steps:
+       - name: Rollback Release
+         if: failure() && steps.create_release.outputs.id != ''
+         uses: author/action-rollback@stable
+         with:
+            release_id: 
+            tag: 'v0.0.15'
+            delete_orphan_tag: true
+         env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Tag
-      id: autotagger
-      uses: butlerlogic/action-autotag@stable
-      with:
+release-content:
+     name: 'Rollback the release'
+     runs-on: ubuntu-latest 
+     steps:
+     - name: Tag
+       id: autotagger
+       uses: butlerlogic/action-autotag@stable
+       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       
-    - name: Release
-      id: create_release
-      uses: actions/create-release@v1.0.0
-      env:
+     - name: Release
+       id: create_release
+       uses: actions/create-release@v1.0.0
+       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
+       with:
           tag_name: V${{ github.run_number }}
           release_name: V${{ github.run_number }}
           body: ${{ github.run_number }}

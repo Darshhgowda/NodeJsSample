@@ -36,7 +36,7 @@ jobs:
       - name: Rollback Release
         if: failure() && steps.create_release.outputs.id != ''
         uses: author/action-rollback@stable
-        needs: [ publish ]
+      
         with:
           # Using a known release ID
           id: ${{ steps.create_release.id }}

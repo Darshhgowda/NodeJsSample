@@ -31,16 +31,16 @@ jobs:
         id: publish_npm
         uses: author/action-publish@stable
         env:
-          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Rollback Release
-        if: failure() && steps.create_release.outputs.id != ''
-        uses: author/action-rollback@stable
+      #- name: Rollback Release
+       # if: failure() && steps.create_release.outputs.id != ''
+       # uses: author/action-rollback@stable
       
-        with:
+        #with:
           # Using a known release ID
-          id: ${{ steps.create_release.id }}
+         # id: ${{ steps.create_release.id }}
           # Using a tag name
-          tag: ${{ steps.autotagger.outputs.tagname }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#tag: ${{ steps.autotagger.outputs.tagname }}
+       # env:
+         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

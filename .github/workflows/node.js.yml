@@ -31,11 +31,11 @@ rollback-content:
      needs: [ build ]
      steps:
        - name: Rollback Release
-         if: failure() && steps.create_release.outputs.id != ''
+         if: failure() && steps.create_release.outputs.id != '8df0474'
          uses: author/action-rollback@stable
          with:
-            release_id: 
-            tag: 'v0.0.15'
+            release_id: 8df0474
+            tag: 'v15'
             delete_orphan_tag: true
          env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

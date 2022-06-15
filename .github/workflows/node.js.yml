@@ -24,6 +24,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: d3300f6794144e121ecf8f4b58dbe8c00eeb20fb
+          SONAR_HOST_URL:  https://c33e-14-98-199-230.ngrok.io
   
   rollback-content:
      name: 'Rollback the release'
